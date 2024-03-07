@@ -1,5 +1,5 @@
 import { registerUser } from "@/services/auth";
-import { loginAndRegisterValidation } from "@/pages/validations/auth";
+import { loginAndRegisterValidation } from "@/validations/auth";
 import rateLimit from "@/utils/rateLimiter";
 
 const rateLimitRegister = rateLimit(

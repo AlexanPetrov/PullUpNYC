@@ -1,5 +1,5 @@
 import { resetPassword } from "@/services/auth";
-import { resetPasswordValidation } from "@/pages/validations/auth";
+import { resetPasswordValidation } from "@/validations/auth";
 import rateLimit from "@/utils/rateLimiter";
 
 const rateLimitResetPassword = rateLimit(
