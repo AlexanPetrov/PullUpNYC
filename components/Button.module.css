@@ -1,0 +1,24 @@
+.button {
+    padding: 10px 15px;
+    background-color: rgb(4, 98, 156);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    margin: 0 3px; 
+    font-weight: bold;
+}
+  
+.button:hover {
+    background-color: rgb(3, 68, 109); 
+}
+
+.button:active {
+    transform: scale(0.98); 
+}
+
+.button:focus {
+    box-shadow: 0 0 0 2px rgb(3, 68, 109); 
+}

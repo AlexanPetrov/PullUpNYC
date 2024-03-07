@@ -1,0 +1,43 @@
+.errorModalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+}
+  
+.errorModalContent {
+    background-color: #fff; 
+    padding: 40px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 300px; 
+    max-width: 90%; 
+    color: #333; 
+    text-align: center;
+}
+  
+.errorModalContent p {
+    margin-bottom: 20px; 
+    font-size: 1.25rem; 
+}
+  
+.errorModalContent button {
+    background-color: #0070f3; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+  
+.errorModalContent button:hover {
+    background-color: #0053b3; 
+}
+  

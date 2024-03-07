@@ -1,0 +1,39 @@
+.mapWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: rgb(4, 98, 156);;
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
+    overflow: hidden;
+    font-size: 16px;
+    color: rgb(208, 59, 21);
+    text-align: center;
+    font-weight: bold;
+}
+  
+.loading-error-message {
+    font-size: 16px;
+    color: rgb(208, 59, 21);
+    text-align: center;
+    font-weight: bold;
+}
+ 
+.loads {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    height: 100%; 
+    position: absolute; 
+    top: 0;
+    left: 0;
+    font-weight: bold;
+}
+
+.errors {
+    color: rgb(208, 59, 21);
+    text-align: center;
+    font-weight: bold;
+}

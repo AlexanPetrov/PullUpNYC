@@ -1,0 +1,35 @@
+.footer {
+    padding: 10px 10px;
+    text-align: center;
+    background-color: #2bb1a4;
+    border-top: 2px solid #06a091;
+    color: var(--txt-color); 
+    font-size: 13px;
+    font-family: Arial, sans-serif; 
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); 
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+@keyframes slide {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+}  
+  
+.runningLine {
+    white-space: nowrap;
+    overflow: hidden;
+    display: block; 
+    position: relative; 
+    height: 100%; 
+    align-items: center;
+    animation: slide 20s linear infinite; 
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-color);
+}

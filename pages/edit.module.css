@@ -1,0 +1,105 @@
+.container {
+  max-width: 600px;
+  margin: auto;
+  margin-top: 75px;
+  padding: 20px;
+  border: 3px solid rgb(3, 68, 109);
+  border-radius: 5px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 25px;
+  color: rgb(2, 49, 78); 
+}
+
+.locationList {
+  list-style: none;
+  padding: 0;
+  color: var(--txt-color);
+  font-weight: bold;
+}
+
+.locationList li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.locationDetails {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.editButton {
+  padding: 10px 15px;
+  background-color: var(--txt-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  margin: 0 auto; 
+  font-weight: bold;
+  display: block;
+}
+
+.deleteButton {
+  padding: 10px 15px;
+  background-color: #f01e3e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+  margin: 0 auto; 
+  font-weight: bold;
+  display: block;
+}
+
+.editButton:hover {
+  background-color: rgb(3, 68, 109);
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+}
+
+.deleteButton:disabled {
+  background-color: #e6e6e6;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.editButton:active {
+  transform: scale(0.98); 
+}
+
+.editButton:focus {
+  box-shadow: 0 0 0 2px rgb(3, 68, 109); 
+}
+
+.deleteButton:active {
+  transform: scale(0.98); 
+}
+
+.deleteButton:focus {
+  box-shadow: 0 0 0 2px rgb(3, 68, 109); 
+}
+
+.buttonContainer {
+  text-align: center;
+  margin-top: 20px;
+}
