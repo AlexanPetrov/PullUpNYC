@@ -36,8 +36,8 @@ const About = () => {
         <h2>Join the Movement</h2>
         <p>Our platform is more than just a map; it's a community. Share your favorite spots and photos! Let's transform the urban jungle into a network of strength, one pull-up at a time.</p>
 
-        <h2>Let Us Know What You Think</h2>
-        <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}>Contact Us Here</a>
+        <h2>Contact Us</h2>
+        <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`} className={styles.contactLink}>Click Here</a>
       </div>
       <div className={styles.photoBooth}>
         <Image
