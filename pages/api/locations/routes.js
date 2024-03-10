@@ -1,5 +1,5 @@
 import {
-  getAll,
+  getAllByUserId,
   addLocation,
   deleteLocation,
   updateLocation,
@@ -7,8 +7,14 @@ import {
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
+    const userId = req.query.userId;
+
+    if (!userId) {
+      return res.status(400).json({ error: "UserId is required" });
+    }
+
     try {
-      const locations = await getAll();
+      const locations = await getAllByUserId(userId);
       res.status(200).json(locations);
     } catch (error) {
       console.error("Error fetching locations:", error);
@@ -16,6 +22,10 @@ export default async function handler(req, res) {
     }
   } else if (req.method === "POST") {
     try {
+      if (!req.body.userId) {
+        return res.status(400).json({ error: "UserId is required" });
+      }
+
       const locationId = await addLocation(req.body);
       res
         .status(201)

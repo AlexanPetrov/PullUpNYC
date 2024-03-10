@@ -27,8 +27,11 @@ const LogIn = () => {
         throw new Error(data.message || 'Failed to log in');
       }
 
+      const data = await response.json();  
+      localStorage.setItem('user', JSON.stringify(data.user)); 
+
       localStorage.setItem("isLoggedIn", "true");
-      window.location.href = '/';
+      window.location.href = '/';  
     } catch (error) {
       setError(error.message);
       setIsErrorModalVisible(true);

@@ -4,6 +4,10 @@ export const getAll = async () => {
   return await query("SELECT * FROM locations");
 };
 
+export const getAllByUserId = async (userId) => {
+  return await query("SELECT * FROM locations WHERE userId = ?", [userId]);
+};
+
 export const addLocation = async ({
   name,
   address,
@@ -12,10 +16,11 @@ export const addLocation = async ({
   rating,
   latitude,
   longitude,
+  userId,
 }) => {
   const result = await query(
-    "INSERT INTO locations (name, address, description, zip, rating, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?)",
-    [name, address, description, zip, rating, latitude, longitude]
+    "INSERT INTO locations (name, address, description, zip, rating, latitude, longitude, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    [name, address, description, zip, rating, latitude, longitude, userId]
   );
   return result.insertId;
 };
@@ -33,9 +38,19 @@ export const updateLocation = async ({
   rating,
   latitude,
   longitude,
+  userId,
 }) => {
+  const [existingLocation] = await query(
+    "SELECT userId FROM locations WHERE id = ?",
+    [id]
+  );
+
+  if (!existingLocation || existingLocation.userId !== userId) {
+    throw new Error("Unauthorized: You can only update your own locations.");
+  }
+
   await query(
-    "UPDATE locations SET name = ?, address = ?, description = ?, zip = ?, rating = ?, latitude = ?, longitude = ? WHERE id = ?",
-    [name, address, description, zip, rating, latitude, longitude, id]
+    "UPDATE locations SET name = ?, address = ?, description = ?, zip = ?, rating = ?, latitude = ?, longitude = ?, userId = ? WHERE id = ?",
+    [name, address, description, zip, rating, latitude, longitude, userId, id]
   );
 };

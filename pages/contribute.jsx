@@ -22,11 +22,20 @@ const Contribute = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user || !user.id) {
+      alert("You must be logged in to add a location.");
+      return;
+    }
+
+    const locationData = { ...formData, userId: user.id };
+
     try {
       const response = await fetch('/api/locations/routes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(locationData),
       });
       if (response.ok) {
         alert("Location added successfully!");
@@ -40,7 +49,8 @@ const Contribute = () => {
           longitude: '',
         });
       } else {
-        throw new Error('Failed to add location.');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add location.');
       }
     } catch (error) {
       console.error("Error submitting form:", error);

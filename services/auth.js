@@ -87,7 +87,7 @@ export async function requestPasswordReset(email) {
 
     const resetUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth/resetPassword?token=${resetToken}`;
     await transporter.sendMail({
-      from: `"Your App Name" <${process.env.EMAIL_USER}>`,
+      from: `"Pull Up NYC" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "Reset Your Password",
       text: `Please reset your password by clicking on the following link: ${resetUrl}`,
