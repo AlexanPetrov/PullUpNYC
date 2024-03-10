@@ -1,26 +1,40 @@
+// Import the necessary functions from your locations service
 import {
+  getAll,
   getAllByUserId,
   addLocation,
   deleteLocation,
   updateLocation,
 } from "@/services/locations";
 
+// The main handler function for your API endpoint
 export default async function handler(req, res) {
+  // Handle GET requests
   if (req.method === "GET") {
     const userId = req.query.userId;
 
+    // If userId is not provided, fetch and return all locations
     if (!userId) {
-      return res.status(400).json({ error: "UserId is required" });
+      try {
+        const locations = await getAll();
+        return res.status(200).json(locations);
+      } catch (error) {
+        console.error("Error fetching all locations:", error);
+        return res.status(500).json({ error: "Failed to fetch all locations" });
+      }
     }
 
+    // If userId is provided, fetch and return locations for that user
     try {
       const locations = await getAllByUserId(userId);
       res.status(200).json(locations);
     } catch (error) {
-      console.error("Error fetching locations:", error);
-      res.status(500).json({ error: "Failed to fetch locations" });
+      console.error("Error fetching locations by userId:", error);
+      res.status(500).json({ error: "Failed to fetch locations by userId" });
     }
-  } else if (req.method === "POST") {
+  }
+  // Handle POST requests for adding a new location
+  else if (req.method === "POST") {
     try {
       if (!req.body.userId) {
         return res.status(400).json({ error: "UserId is required" });
@@ -34,7 +48,9 @@ export default async function handler(req, res) {
       console.error("Error adding location:", error);
       res.status(500).json({ error: "Failed to add location" });
     }
-  } else if (req.method === "DELETE") {
+  }
+  // Handle DELETE requests for deleting locations
+  else if (req.method === "DELETE") {
     try {
       const { locationIds } = req.body;
       await Promise.all(locationIds.map((id) => deleteLocation(id)));
@@ -43,7 +59,9 @@ export default async function handler(req, res) {
       console.error("Error deleting locations:", error);
       res.status(500).json({ error: "Failed to delete locations" });
     }
-  } else if (req.method === "PUT") {
+  }
+  // Handle PUT requests for updating locations
+  else if (req.method === "PUT") {
     try {
       await updateLocation(req.body);
       res.status(200).json({ message: "Location updated successfully" });
@@ -51,7 +69,9 @@ export default async function handler(req, res) {
       console.error("Error updating location:", error);
       res.status(500).json({ error: "Failed to update location" });
     }
-  } else {
+  }
+  // Handle any unsupported HTTP methods
+  else {
     res.setHeader("Allow", ["GET", "POST", "DELETE", "PUT"]);
     res.status(405).end(`Method ${req.method} Not Allowed`);
   }
