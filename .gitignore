@@ -10,8 +10,5 @@
 # local env files
 .env.local
 
-# db
-pullupnydb.sql
-
 # notes
 info.txt
