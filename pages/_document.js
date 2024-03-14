@@ -11,7 +11,7 @@ class MyDocument extends Document {
           />
           <meta
             name="description"
-            content="Find pull up bars in St Petersburg"
+            content="Find pull up bars in New York City"
           />
         </Head>
         <body>
