@@ -1,5 +1,3 @@
-USE if0_36161825_pullupnydb;
-
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
     password VARCHAR(255) NOT NULL,
