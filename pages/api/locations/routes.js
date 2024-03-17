@@ -20,17 +20,21 @@ export default async function handler(req, res) {
         return res.status(200).json(locations);
       } catch (error) {
         console.error("Error fetching all locations:", error);
-        return res.status(500).json({ error: "Failed to fetch all locations" });
+        // Ensuring the error message is in a proper JSON format
+        return res.status(500).json({
+          error: "Failed to fetch all locations",
+          message: error.toString(),
+        });
       }
-    }
-
-    // If userId is provided, fetch and return locations for that user
-    try {
-      const locations = await getAllByUserId(userId);
-      res.status(200).json(locations);
-    } catch (error) {
-      console.error("Error fetching locations by userId:", error);
-      res.status(500).json({ error: "Failed to fetch locations by userId" });
+    } else {
+      // If userId is provided, fetch and return locations for that user
+      try {
+        const locations = await getAllByUserId(userId);
+        res.status(200).json(locations);
+      } catch (error) {
+        console.error("Error fetching locations by userId:", error);
+        res.status(500).json({ error: "Failed to fetch locations by userId" });
+      }
     }
   }
   // Handle POST requests for adding a new location
