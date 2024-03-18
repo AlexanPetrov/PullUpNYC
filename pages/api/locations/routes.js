@@ -10,34 +10,6 @@ import {
 // The main handler function for your API endpoint
 export default async function handler(req, res) {
   // Handle GET requests
-  // if (req.method === "GET") {
-  //   const userId = req.query.userId;
-
-  //   // If userId is not provided, fetch and return all locations
-  //   if (!userId) {
-  //     try {
-  //       const locations = await getAll();
-  //       return res.status(200).json(locations);
-  //     } catch (error) {
-  //       console.error("Error fetching all locations:", error);
-  //       // Ensuring the error message is in a proper JSON format
-  //       return res.status(500).json({
-  //         error: "Failed to fetch all locations",
-  //         message: error.toString(),
-  //       });
-  //     }
-  //   } else {
-  //     // If userId is provided, fetch and return locations for that user
-  //     try {
-  //       const locations = await getAllByUserId(userId);
-  //       res.status(200).json(locations);
-  //     } catch (error) {
-  //       console.error("Error fetching locations by userId:", error);
-  //       res.status(500).json({ error: "Failed to fetch locations by userId" });
-  //     }
-  //   }
-  // }
-
   if (req.method === "GET") {
     const userId = req.query.userId;
 
@@ -51,7 +23,7 @@ export default async function handler(req, res) {
         // Ensuring the error message is in a proper JSON format
         return res.status(500).json({
           error: "Failed to fetch all locations",
-          message: error.message, // Providing a more specific error message
+          message: error.toString(),
         });
       }
     } else {
@@ -61,11 +33,7 @@ export default async function handler(req, res) {
         res.status(200).json(locations);
       } catch (error) {
         console.error("Error fetching locations by userId:", error);
-        // Providing a more specific error message for this case as well
-        res.status(500).json({
-          error: "Failed to fetch locations by userId",
-          message: error.message, // Including the specific error message
-        });
+        res.status(500).json({ error: "Failed to fetch locations by userId" });
       }
     }
   }
