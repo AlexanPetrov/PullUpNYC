@@ -6,27 +6,36 @@ import ErrorModal from '@/components/ErrorModal';
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [passwordError, setPasswordError] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false); 
   const router = useRouter();
 
   const { token } = router.query;
 
-  const error_message = (
-    <ul>
-      <li>Failed to reset password!</li>
-      <li>8 or more chars long</li>
-      <li>At least one uppercase letter</li>
-      <li>At least one lowercase letter</li>
-      <li>At least one number</li>
-      <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
-    </ul>
-  );  
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/\?])[A-Za-z\d!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/\?]{8,}$/;
+    return regex.test(password);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validatePassword(password)) {
+      setPasswordError(
+        <ul>
+          <li>8 or more chars long</li>
+          <li>At least one uppercase letter</li>
+          <li>At least one lowercase letter</li>
+          <li>At least one number</li>
+          <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
+        </ul>
+      );
+      setShowErrorModal(true);
+      return;
+    }
+
     if (password !== confirmPassword) {
-      setMessage("Passwords don't match.");
+      setPasswordError("Passwords don't match.");
       setShowErrorModal(true);
       return;
     }
@@ -40,13 +49,14 @@ const ResetPassword = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setMessage('Your password has been reset successfully.');
         router.push('/auth/login');
       } else {
-        throw new Error(data.message || error_message);
+        setPasswordError(data.message || 'Failed to reset password');
+        setShowErrorModal(true);
       }
     } catch (error) {
-      setMessage(error.message);
+      setPasswordError(error.message);
+      setShowErrorModal(true);
     }
   };
 
@@ -54,9 +64,8 @@ const ResetPassword = () => {
     <div className={styles.container}>
       <h2 className={styles.title}>Set New Password</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label className={styles.npassword} htmlFor="password">New Password:</label>
+        <label htmlFor="password">New Password:</label>
         <input
-          className={styles.inputfield}
           type="password"
           id="password"
           name="password"
@@ -64,9 +73,8 @@ const ResetPassword = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <label className={styles.cpassword} htmlFor="confirmPassword">Confirm New Password:</label>
+        <label htmlFor="confirmPassword">Confirm New Password:</label>
         <input
-          className={styles.inputfield}
           type="password"
           id="confirmPassword"
           name="confirmPassword"
@@ -74,16 +82,14 @@ const ResetPassword = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        <button type="submit" className={styles.button}>Reset Password</button>
+        <button type="submit">Reset Password</button>
       </form>
-      {showErrorModal && <ErrorModal message={message} onClose={() => setShowErrorModal(false)} />}
-      {!showErrorModal && message && <p className={styles.message}>{message}</p>}
+      {showErrorModal && <ErrorModal message={passwordError} onClose={() => setShowErrorModal(false)} />}
     </div>
   );
 };
 
 export default ResetPassword;
-
 
 
 
