@@ -20,7 +20,7 @@ const Register = () => {
 
     if (name === 'password') {
       if (!validatePassword(value)) {
-        setPasswordError('Password must be 8 or more characters long. It must include some capital letter/s, some small letter/s, some number/s & some of the following special characters: !@#$%^&*()-_=+[]{}|;:\'",.<>/?');
+        setPasswordError('8 or more characters long.\nSome capital letter/s\nsome small letter/s\nsome number/s\nsome of the following special characters: !@#$%^&*()-_=+[]{}|;:\'",.<>/?');
       } else {
         setPasswordError('');
       }
