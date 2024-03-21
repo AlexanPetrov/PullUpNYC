@@ -4,47 +4,27 @@ import styles from '@/pages/auth/resetPassword.module.css';
 import ErrorModal from '@/components/ErrorModal'; 
 
 const ResetPassword = () => {
-  const router = useRouter();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
   const [message, setMessage] = useState('');
-  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false); 
+  const router = useRouter();
 
   const { token } = router.query;
 
-  const validatePassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/\?])[A-Za-z\d!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/\?]{8,}$/;
-    return regex.test(password);
-  };
-
-  const handleChangePassword = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-
-    if (!validatePassword(newPassword)) {
-      setPasswordError(
-        "Password must meet the following requirements:\n" +
-        "- 8 or more characters long\n" +
-        "- Include at least one uppercase letter\n" +
-        "- Include at least one lowercase letter\n" +
-        "- Include at least one number\n" +
-        "- Include at least one of the following special characters: !@#$%^&*()-_=+[]{}|;:'\",.<>/?"
-      );
-    } else {
-      setPasswordError('');
-    }
-  };
+  const error_message = (
+    <ul>
+      <li>Failed to reset password!</li>
+      <li>8 or more chars long</li>
+      <li>At least one uppercase letter</li>
+      <li>At least one lowercase letter</li>
+      <li>At least one number</li>
+      <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
+    </ul>
+  );  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (passwordError || !validatePassword(password)) {
-      setMessage(passwordError || "Please ensure your password meets all the requirements.");
-      setShowErrorModal(true);
-      return;
-    }
-
     if (password !== confirmPassword) {
       setMessage("Passwords don't match.");
       setShowErrorModal(true);
@@ -63,11 +43,10 @@ const ResetPassword = () => {
         setMessage('Your password has been reset successfully.');
         router.push('/auth/login');
       } else {
-        throw new Error(data.message || 'Failed to reset password');
+        throw new Error(data.message || error_message);
       }
     } catch (error) {
       setMessage(error.message);
-      setShowErrorModal(true);
     }
   };
 
@@ -82,14 +61,9 @@ const ResetPassword = () => {
           id="password"
           name="password"
           value={password}
-          onChange={handleChangePassword}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {passwordError && (
-          <div className={styles.error}>
-            <pre>{passwordError}</pre>
-          </div>
-        )}
         <label className={styles.cpassword} htmlFor="confirmPassword">Confirm New Password:</label>
         <input
           className={styles.inputfield}
@@ -100,7 +74,7 @@ const ResetPassword = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        <button type="submit" className={styles.button} disabled={!!passwordError}>Reset Password</button>
+        <button type="submit" className={styles.button}>Reset Password</button>
       </form>
       {showErrorModal && <ErrorModal message={message} onClose={() => setShowErrorModal(false)} />}
       {!showErrorModal && message && <p className={styles.message}>{message}</p>}
@@ -109,6 +83,7 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+
 
 
 
