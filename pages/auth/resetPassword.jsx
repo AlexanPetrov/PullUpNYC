@@ -54,7 +54,7 @@ const ResetPassword = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <label htmlFor="confirmPassword">Confirm New Password:</label>
+        <label htmlFor="confirmPassword">Confirm Password:</label>
         <input
           type="password"
           id="confirmPassword"
@@ -70,7 +70,7 @@ const ResetPassword = () => {
             <li>At least one uppercase letter</li>
             <li>At least one lowercase letter</li>
             <li>At least one number</li>
-            {/* <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li> */}
+            <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
           </ul>
         </div>
         <button type="submit" className={styles.button}>Reset Password</button>
