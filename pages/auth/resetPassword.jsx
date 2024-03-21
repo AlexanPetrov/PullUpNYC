@@ -41,7 +41,7 @@ const ResetPassword = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Set Password</h2>
+      <h2 className={styles.title}>Set New Password</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.npassword} htmlFor="password">New Password:</label>
         <input
