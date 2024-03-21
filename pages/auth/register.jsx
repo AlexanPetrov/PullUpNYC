@@ -17,33 +17,71 @@ const Register = () => {
     }));
   };
 
+  // const handleRegistration = async (formData) => {
+  //   const payload = {
+  //     email: formData.email,
+  //     password: formData.password,
+  //   };
+
+  //   try {
+  //     const response = await fetch('/api/auth/register', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       throw new Error(data.message || 'Failed to register');
+  //     }
+
+  //     localStorage.setItem("isLoggedIn", "true");
+  //     window.dispatchEvent(new Event('authChange')); 
+  //     router.push('/'); 
+  //   } catch (error) {
+  //     console.error('Error registering:', error.message);
+  //     setError(error.message);
+  //     setIsErrorModalVisible(true);
+  //   }
+  // };
+
   const handleRegistration = async (formData) => {
     const payload = {
       email: formData.email,
       password: formData.password,
     };
-
+  
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-
+  
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || 'Failed to register');
       }
-
+  
+      // Retrieve the user data from the response
+      const { user: newUser } = await response.json();
+  
+      // Store the user data in localStorage to consider them logged in
+      localStorage.setItem('user', JSON.stringify(newUser));
       localStorage.setItem("isLoggedIn", "true");
-      window.dispatchEvent(new Event('authChange')); 
+  
+      // Dispatch an event in case other parts of your application need to react to the authentication change
+      window.dispatchEvent(new Event('authChange'));
+  
+      // Redirect the user or change the state as needed
       router.push('/'); 
     } catch (error) {
+      // Handle errors, such as displaying an error message to the user
       console.error('Error registering:', error.message);
       setError(error.message);
       setIsErrorModalVisible(true);
     }
-  };
+  };  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
