@@ -7,49 +7,12 @@ const ResetPassword = () => {
   const router = useRouter();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [showErrorModal, setShowErrorModal] = useState(false);
   const [message, setMessage] = useState('');
-
+  const [showErrorModal, setShowErrorModal] = useState(false); 
   const { token } = router.query;
-
-  const validatePassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/\?])[A-Za-z\d!@#$%^&*()\-_=+\[\]{}|;:'",.<>\/\?]{8,}$/;
-    return regex.test(password);
-  };
-
-  const handleChangePassword = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-
-    if (!validatePassword(newPassword)) {
-      setPasswordError(
-        <ul>
-          <li>8 or more chars long</li>
-          <li>At least one uppercase letter</li>
-          <li>At least one lowercase letter</li>
-          <li>At least one number</li>
-          <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
-        </ul>
-      );
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const handleChangeConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!validatePassword(password)) {
-      setMessage("Please ensure your password meets all the requirements.");
-      setShowErrorModal(true);
-      return;
-    }
-
     if (password !== confirmPassword) {
       setMessage("Passwords don't match.");
       setShowErrorModal(true);
@@ -70,7 +33,7 @@ const ResetPassword = () => {
 
       setMessage('Your password has been reset successfully.');
       setShowErrorModal(true);
-      setTimeout(() => router.push('/auth/login'), 2000); // Redirect after 2 seconds
+      setTimeout(() => router.push('/auth/login'), 3000); // Redirect after 3 seconds
     } catch (error) {
       setMessage(error.message);
       setShowErrorModal(true);
@@ -87,20 +50,29 @@ const ResetPassword = () => {
           id="password"
           name="password"
           value={password}
-          onChange={handleChangePassword}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {passwordError && <div className={styles.error}>{passwordError}</div>}
         <label htmlFor="confirmPassword">Confirm New Password:</label>
         <input
           type="password"
           id="confirmPassword"
           name="confirmPassword"
           value={confirmPassword}
-          onChange={handleChangeConfirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        <button type="submit" className={styles.button} disabled={!!passwordError || password !== confirmPassword}>Reset Password</button>
+        <div className={styles.passwordRequirements}>
+          <p>Password requirements:</p>
+          <ul>
+            <li>8 or more chars long</li>
+            <li>At least one uppercase letter</li>
+            <li>At least one lowercase letter</li>
+            <li>At least one number</li>
+            <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
+          </ul>
+        </div>
+        <button type="submit" className={styles.button}>Reset Password</button>
       </form>
       {showErrorModal && <ErrorModal message={message} onClose={() => setShowErrorModal(false)} />}
     </div>
@@ -108,6 +80,7 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+
 
 
 
