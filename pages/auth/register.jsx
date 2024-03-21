@@ -6,7 +6,7 @@ import styles from '@/pages/auth/register.module.css';
 const Register = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [error, setError] = useState('');
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
@@ -19,11 +19,7 @@ const Register = () => {
     const { name, value } = e.target;
 
     if (name === 'password') {
-      if (!validatePassword(value)) {
-        setPasswordError('8 or more characters long.\nSome capital letter/s\nsome small letter/s\nsome number/s\nsome of the following special characters: !@#$%^&*()-_=+[]{}|;:\'",.<>/?');
-      } else {
-        setPasswordError('');
-      }
+      setPasswordError(!validatePassword(value));
     }
 
     setFormData(prevState => ({
@@ -34,7 +30,7 @@ const Register = () => {
 
   const handleRegistration = async (formData) => {
     if (passwordError) {
-      setError(passwordError);
+      setError("Please ensure your password meets all the requirements.");
       setIsErrorModalVisible(true);
       return;
     }
@@ -43,26 +39,26 @@ const Register = () => {
       email: formData.email,
       password: formData.password,
     };
-  
+
     try {
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-  
+
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || 'Failed to register');
       }
-  
+
       const { user: newUser } = await response.json();
-  
+
       localStorage.setItem('user', JSON.stringify(newUser));
       localStorage.setItem("isLoggedIn", "true");
-  
+
       window.dispatchEvent(new Event('authChange'));
-  
+
       router.push('/'); 
     } catch (error) {
       console.error('Error registering:', error.message);
@@ -103,7 +99,17 @@ const Register = () => {
             onChange={handleChange} 
             className={styles.input}
           />
-          {passwordError && <div className={styles.error}>{passwordError}</div>}
+          {passwordError && (
+            <div className={styles.error}>
+              <ul>
+                <li>Password must be 8 or more characters long</li>
+                <li>Include at least one uppercase letter</li>
+                <li>Include at least one lowercase letter</li>
+                <li>Include at least one number</li>
+                <li>{"Include at least one of the following special characters: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
+              </ul>
+            </div>
+          )}
         </div>
         <button type="submit" className={styles.button} disabled={!!passwordError}>Register</button>
       </form>
@@ -113,6 +119,7 @@ const Register = () => {
 };
 
 export default Register;
+
 
 
 
