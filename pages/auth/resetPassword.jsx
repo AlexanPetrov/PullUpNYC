@@ -7,7 +7,7 @@ const ResetPassword = () => {
   const router = useRouter();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
   const [message, setMessage] = useState('');
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -22,14 +22,25 @@ const ResetPassword = () => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    setPasswordError(!validatePassword(newPassword));
+    if (!validatePassword(newPassword)) {
+      setPasswordError(
+        "Password must meet the following requirements:\n" +
+        "- 8 or more characters long\n" +
+        "- Include at least one uppercase letter\n" +
+        "- Include at least one lowercase letter\n" +
+        "- Include at least one number\n" +
+        "- Include at least one of the following special characters: !@#$%^&*()-_=+[]{}|;:'\",.<>/?"
+      );
+    } else {
+      setPasswordError('');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (passwordError || !validatePassword(password)) {
-      setMessage("Please ensure your password meets all the requirements.");
+      setMessage(passwordError || "Please ensure your password meets all the requirements.");
       setShowErrorModal(true);
       return;
     }
@@ -76,13 +87,7 @@ const ResetPassword = () => {
         />
         {passwordError && (
           <div className={styles.error}>
-            <ul>
-              <li>Password must be 8 or more characters long</li>
-              <li>Include at least one uppercase letter</li>
-              <li>Include at least one lowercase letter</li>
-              <li>Include at least one number</li>
-              <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
-            </ul>
+            <pre>{passwordError}</pre>
           </div>
         )}
         <label className={styles.cpassword} htmlFor="confirmPassword">Confirm New Password:</label>
@@ -104,7 +109,6 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
-
 
 
 
