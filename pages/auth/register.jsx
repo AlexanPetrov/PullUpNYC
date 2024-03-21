@@ -102,11 +102,11 @@ const Register = () => {
           {passwordError && (
             <div className={styles.error}>
               <ul>
-                <li>Password must be 8 or more characters long</li>
-                <li>Include at least one uppercase letter</li>
-                <li>Include at least one lowercase letter</li>
-                <li>Include at least one number</li>
-                <li>{"Include at least one of the following special characters: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
+                <li>8 or more chars long</li>
+                <li>At least one uppercase letter</li>
+                <li>At least one lowercase letter</li>
+                <li>At least one number</li>
+                <li>{"At least one special char: !@#$%^&*()-_=+[]{}|;:'\",.<>/? "}</li>
               </ul>
             </div>
           )}

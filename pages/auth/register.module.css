@@ -45,7 +45,11 @@
     margin: 0 auto; 
     font-weight: bold;
     display: block;
-    margin-top: 10px;
+    margin-top: 20px;
+}
+
+.error {
+    margin-left: 20px;
 }
   
 .button:hover {
