@@ -54,7 +54,7 @@ const ResetPassword = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <label htmlFor="confirmPassword">Confirm Password:</label>
+        <label htmlFor="confirmPassword">Confirm New Password:</label>
         <input
           type="password"
           id="confirmPassword"
