@@ -17,34 +17,6 @@ const Register = () => {
     }));
   };
 
-  // const handleRegistration = async (formData) => {
-  //   const payload = {
-  //     email: formData.email,
-  //     password: formData.password,
-  //   };
-
-  //   try {
-  //     const response = await fetch('/api/auth/register', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     if (!response.ok) {
-  //       const data = await response.json();
-  //       throw new Error(data.message || 'Failed to register');
-  //     }
-
-  //     localStorage.setItem("isLoggedIn", "true");
-  //     window.dispatchEvent(new Event('authChange')); 
-  //     router.push('/'); 
-  //   } catch (error) {
-  //     console.error('Error registering:', error.message);
-  //     setError(error.message);
-  //     setIsErrorModalVisible(true);
-  //   }
-  // };
-
   const handleRegistration = async (formData) => {
     const payload = {
       email: formData.email,

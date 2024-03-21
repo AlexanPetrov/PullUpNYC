@@ -17,6 +17,27 @@ const DeleteAccount = () => {
     }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await fetch('/api/auth/deleteAccount', {
+  //       method: 'DELETE',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(formData),
+  //     });
+  //     if (response.ok) {
+  //       alert("Account deleted successfully!");
+  //       setFormData({ email: '', password: '' }); 
+  //       router.push('/'); 
+  //     } else {
+  //       throw new Error('Failed to delete account.');
+  //     }
+  //   } catch (error) {
+  //     console.error("Error deleting account:", error);
+  //     alert("Error deleting account. Please try again.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,7 +48,18 @@ const DeleteAccount = () => {
       });
       if (response.ok) {
         alert("Account deleted successfully!");
-        setFormData({ email: '', password: '' }); 
+  
+        // Clear user data from localStorage
+        localStorage.removeItem('user');
+        localStorage.removeItem('isLoggedIn');
+  
+        // Optionally, dispatch an event if your application needs to react to log out
+        window.dispatchEvent(new Event('authChange'));
+  
+        // Reset form data
+        setFormData({ email: '', password: '' });
+  
+        // Redirect user to home page or login page
         router.push('/'); 
       } else {
         throw new Error('Failed to delete account.');
@@ -37,6 +69,7 @@ const DeleteAccount = () => {
       alert("Error deleting account. Please try again.");
     }
   };
+  
 
   return (
     <div className={styles.formContainer}>
