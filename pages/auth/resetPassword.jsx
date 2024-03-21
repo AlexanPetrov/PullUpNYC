@@ -1,18 +1,19 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/pages/auth/resetPassword.module.css';
-import ErrorModal from '@/components/ErrorModal'; 
+import ErrorModal from '@/components/ErrorModal';
 
 const ResetPassword = () => {
   const router = useRouter();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [showErrorModal, setShowErrorModal] = useState(false); 
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const { token } = router.query;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setMessage("Passwords don't match.");
       setShowErrorModal(true);
@@ -80,6 +81,7 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+
 
 
 
